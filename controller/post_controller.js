@@ -1,8 +1,13 @@
+const connection = require("../data/db");
 const { log } = require("console");
 const posts = require("../data/post_array");
 
 function index(req, res) {
-  res.json(posts);
+  const sql = "SELECT * FROM posts";
+  connection.query(sql, (err, result) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json(result);
+  });
 }
 
 function show(req, res) {
